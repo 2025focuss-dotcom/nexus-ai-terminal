@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS AI | Terminal de Inteligencia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <style>
+        body { background-color: #020617; color: #f8fafc; font-family: sans-serif; overflow-x: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
+        .glow { position: absolute; width: 400px; height: 400px; background: rgba(6, 182, 212, 0.1); filter: blur(100px); border-radius: 50%; z-index: -1; }
+    </style>
+</head>
+<body>
+    <div class="glow" style="top: -10%; left: -10%;"></div>
+    <div class="glow" style="bottom: -10%; right: -10%; background: rgba(59, 130, 246, 0.05);"></div>
+
+    <nav class="border-b border-white/5 p-4 flex justify-between items-center bg-[#020617]/80 sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <div class="bg-cyan-500 p-1.5 rounded-lg text-black">
+                <i data-lucide="cpu"></i>
+            </div>
+            <span class="text-xl font-black tracking-tighter">NEXUS<span class="text-cyan-500">AI</span></span>
+        </div>
+        <button class="bg-white text-black text-xs font-bold px-6 py-2 rounded-full hover:bg-cyan-400 transition">ACCESO ALPHA</button>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-6 lg:p-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <div class="lg:col-span-8 space-y-8">
+                <div class="glass rounded-[40px] p-8 lg:p-10 relative overflow-hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-green-400 text-[10px] font-bold tracking-widest border border-green-400/20 px-2 py-1 rounded bg-green-400/5 uppercase">Live Analysis</span>
+                        <span class="text-slate-500 font-mono text-xs">LATENCY: 4ms</span>
+                    </div>
+                    <h1 class="text-4xl lg:text-6xl font-black mb-6 tracking-tighter leading-none">
+                        Sentimiento Alcista en <span class="text-cyan-500">Bitcoin</span>
+                    </h1>
+                    <p class="text-slate-400 text-lg mb-8 max-w-2xl">
+                        La IA ha detectado movimientos institucionales masivos. El objetivo técnico se sitúa en los $74,200.
+                    </p>
+                    <div id="chart" class="w-full h-[350px] rounded-2xl overflow-hidden border border-white/5"></div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-4 space-y-6">
+                <div class="glass rounded-[32px] p-8 relative overflow-hidden min-h-[300px] flex flex-col justify-center items-center text-center">
+                    <i data-lucide="lock" class="text-cyan-500 mb-4" size="32"></i>
+                    <h3 class="text-xl font-bold mb-2 italic">DATOS ENCRIPTADOS</h3>
+                    <p class="text-slate-500 text-sm mb-6">Mejora a Pro para ver las ballenas.</p>
+                    <button class="w-full bg-cyan-500 text-black font-black py-4 rounded-2xl hover:bg-cyan-400 transition shadow-lg shadow-cyan-500/20">UPGRADE</button>
+                </div>
+
+                <div class="glass rounded-[32px] p-8">
+                    <h3 class="text-xs font-bold text-slate-500 tracking-[0.2em] uppercase mb-6">Market Pulse</h3>
+                    <div class="space-y-4 text-sm font-medium">
+                        <div class="flex justify-between"><span>S&P 500</span><span class="text-green-400">+1.2%</span></div>
+                        <div class="flex justify-between"><span>NASDAQ</span><span class="text-green-400">+2.4%</span></div>
+                        <div class="flex justify-between"><span>DXY</span><span class="text-red-400">-0.5%</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Inicializar Iconos
+        lucide.createIcons();
+
+        // Inicializar Gráfico
+        const chartElement = document.getElementById('chart');
+        const chart = LightweightCharts.createChart(chartElement, {
+            layout: { background: { color: 'transparent' }, textColor: '#64748b' },
+            grid: { vertLines: { color: 'rgba(255,255,255,0.03)' }, horzLines: { color: 'rgba(255,255,255,0.03)' } },
+            width: chartElement.clientWidth,
+            height: 350,
+        });
+        const series = chart.addAreaSeries({ 
+            lineColor: '#06b6d4', 
+            topColor: 'rgba(6, 182, 212, 0.2)', 
+            bottomColor: 'transparent',
+            lineWidth: 3
+        });
+        series.setData([
+            { time: '2026-01-01', value: 60000 }, { time: '2026-01-02', value: 61500 },
+            { time: '2026-01-03', value: 61200 }, { time: '2026-01-04', value: 64000 },
+            { time: '2026-01-05', value: 63000 }, { time: '2026-01-06', value: 68000 },
+        ]);
+        window.onresize = () => chart.resize(chartElement.clientWidth, 350);
+    </script>
+</body>
+</html>
