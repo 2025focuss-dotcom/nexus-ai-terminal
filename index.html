@@ -3,180 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXUS GOLD | XAUUSD Intelligence</title>
+    <title>XAUUSD PRO | Institutional Terminal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@300;400;700;900&display=swap');
-        body { background-color: #050505; color: #f8fafc; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        .gold-text { color: #fbbf24; font-family: 'Cinzel', serif; }
-        .glass { background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(251, 191, 36, 0.1); backdrop-filter: blur(15px); }
-        .gold-glow { position: absolute; width: 600px; height: 600px; background: rgba(251, 191, 36, 0.05); filter: blur(150px); border-radius: 50%; z-index: -1; }
-        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        .animate-scroll { display: flex; animation: scroll 25s linear infinite; }
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;700;900&display=swap');
+        body { background-color: #050505; color: #e2e8f0; font-family: 'Inter', sans-serif; overflow: hidden; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .glass { background: rgba(15, 15, 15, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); }
+        .gold-border { border-left: 3px solid #fbbf24; }
+        /* Scrollbar minimalista */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
     </style>
 </head>
-<body>
-    <div class="gold-glow" style="top: -10%; left: -10%;"></div>
-    <div class="gold-glow" style="bottom: -10%; right: -10%; background: rgba(217, 119, 6, 0.03);"></div>
+<body class="h-screen flex flex-col">
 
-    <nav class="border-b border-white/5 p-5 lg:px-12 flex justify-between items-center bg-black/80 backdrop-blur-xl sticky top-0 z-50">
-        <div class="flex items-center gap-3">
-            <div class="bg-[#fbbf24] p-2 rounded-lg text-black shadow-[0_0_20px_rgba(251,191,36,0.3)]">
-                <i data-lucide="gem"></i>
-            </div>
-            <span class="text-2xl font-black tracking-tighter uppercase gold-text">NEXUS<span class="text-white">GOLD</span></span>
-        </div>
+    <header class="border-b border-white/5 bg-black/90 p-4 flex justify-between items-center z-50">
         <div class="flex items-center gap-6">
-            <div class="hidden md:flex gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
-                <span class="hover:text-[#fbbf24] cursor-pointer transition">Macro</span>
-                <span class="hover:text-[#fbbf24] cursor-pointer transition">Yields</span>
-                <span class="hover:text-[#fbbf24] cursor-pointer transition">Central Banks</span>
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-[#fbbf24] rounded flex items-center justify-center text-black shadow-[0_0_15px_rgba(251,191,36,0.2)]">
+                    <i data-lucide="component" size="18"></i>
+                </div>
+                <span class="text-lg font-black tracking-tighter uppercase">Nexus<span class="text-[#fbbf24]">Gold</span> <span class="text-[10px] text-slate-500 font-mono ml-2 uppercase">v2.0 PRO</span></span>
             </div>
-            <button class="bg-gradient-to-r from-[#fbbf24] to-[#d97706] text-black text-[10px] font-black px-8 py-3 rounded-md shadow-xl hover:brightness-110 transition uppercase tracking-widest">
-                Institutional Terminal
-            </button>
+            <div class="h-4 w-[1px] bg-white/10"></div>
+            <div class="flex gap-6 text-[10px] font-mono font-bold text-slate-500 uppercase">
+                <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span> Server: Global-NY</div>
+                <div class="flex items-center gap-2 text-cyan-500">Feed: Real-Time Active</div>
+            </div>
         </div>
-    </nav>
-
-    <div class="bg-black/80 border-b border-[#fbbf24]/20 h-12 flex items-center overflow-hidden">
-        <div class="animate-scroll whitespace-nowrap flex gap-16 text-[11px] font-mono font-bold uppercase tracking-widest">
-            <span class="text-white">SPOT GOLD / XAUUSD: <span class="text-[#fbbf24]" id="gold-price-ticker">$2,442.50</span></span>
-            <span class="text-slate-500">DXY: <span class="text-red-400">104.12 ▼</span></span>
-            <span class="text-slate-500">US10Y YIELD: <span class="text-white">4.22%</span></span>
-            <span class="text-slate-500">REAL RATES: <span class="text-green-400">1.85%</span></span>
-            <span class="text-[#fbbf24]">S&P 500 GOLD RATIO: <span class="text-white">2.14</span></span>
+        <div class="flex gap-4">
+            <button class="bg-white/5 hover:bg-white/10 text-white text-[10px] font-bold px-4 py-2 rounded border border-white/10 transition">EXPORT DATA</button>
+            <button class="bg-[#fbbf24] text-black text-[10px] font-black px-4 py-2 rounded shadow-lg shadow-[#fbbf24]/10">TERMINAL SETTINGS</button>
         </div>
-    </div>
+    </header>
 
-    <main class="max-w-[1700px] mx-auto p-6 lg:p-12">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+    <div class="flex-1 flex overflow-hidden">
+        
+        <aside class="w-80 border-r border-white/5 bg-black/40 overflow-y-auto p-4 space-y-6 hidden lg:block">
+            <div class="space-y-4">
+                <h3 class="text-[10px] font-bold text-slate-500 tracking-widest uppercase">Market Core</h3>
+                <div class="glass rounded-xl p-4 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-medium text-slate-400">XAU/USD</span>
+                        <span id="price-main" class="text-sm font-bold text-[#fbbf24] mono">$2,442.50</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-medium text-slate-400">DXY (Index)</span>
+                        <span class="text-sm font-bold text-red-400 mono">104.12 ▼</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-medium text-slate-400">US10Y Yield</span>
+                        <span class="text-sm font-bold text-white mono">4.22%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <h3 class="text-[10px] font-bold text-slate-500 tracking-widest uppercase">Neural Sentiment</h3>
+                <div class="glass rounded-xl p-4">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-[10px] font-bold uppercase">Longs vs Shorts</span>
+                        <span class="text-[10px] font-bold text-[#fbbf24]">82% Bullish</span>
+                    </div>
+                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div class="h-full bg-[#fbbf24] w-[82%]"></div>
+                    </div>
+                    <p class="text-[10px] text-slate-500 mt-4 leading-relaxed">Alta acumulación detectada en zonas de liquidez institucionales (Smart Money Concepts).</p>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <h3 class="text-[10px] font-bold text-slate-500 tracking-widest uppercase">Liquidity Zones</h3>
+                <div class="space-y-2">
+                    <div class="text-[10px] p-2 rounded bg-green-500/10 border border-green-500/20 flex justify-between">
+                        <span class="text-green-400">SUPPORT</span><span class="text-green-400 font-bold">$2,420.00</span>
+                    </div>
+                    <div class="text-[10px] p-2 rounded bg-red-500/10 border border-red-500/20 flex justify-between">
+                        <span class="text-red-400">RESISTANCE</span><span class="text-red-400 font-bold">$2,485.50</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col overflow-hidden">
             
-            <div class="lg:col-span-8 space-y-10">
-                <div class="glass rounded-[40px] p-8 lg:p-12 relative overflow-hidden group border-[#fbbf24]/5">
-                    <div class="flex justify-between items-center mb-10">
-                        <div class="flex items-center gap-3 px-5 py-2 bg-[#fbbf24]/5 border border-[#fbbf24]/20 rounded-full">
-                            <div class="w-2 h-2 bg-[#fbbf24] rounded-full animate-pulse shadow-[0_0_10px_#fbbf24]"></div>
-                            <span class="text-[10px] font-black text-[#fbbf24] tracking-[0.3em] uppercase">XAU Intelligence Active</span>
-                        </div>
-                        <span class="text-slate-600 font-mono text-[10px]">LBM FIXING DATA</span>
-                    </div>
-                    
-                    <h1 id="news-headline" class="text-5xl lg:text-7xl font-black mb-8 tracking-tighter leading-none text-white italic">
-                        El Oro busca soporte en los <span class="text-[#fbbf24]">$2,440</span>
-                    </h1>
-                    <p id="news-content" class="text-slate-400 text-lg lg:text-2xl mb-12 max-w-4xl leading-relaxed">
-                        Nuestra IA detecta una fuerte demanda de bancos centrales en Asia. El sentimiento institucional se mantiene alcista mientras el DXY muestra debilidad estructural.
-                    </p>
-                    
-                    <div id="gold-chart" class="w-full h-[450px] rounded-[24px] overflow-hidden bg-black/40 border border-white/5 shadow-2xl"></div>
+            <div class="h-12 border-b border-white/5 bg-black/20 flex items-center px-6 justify-between">
+                <div class="flex gap-6 text-[10px] font-bold text-slate-400">
+                    <span class="text-white border-b-2 border-[#fbbf24] h-12 flex items-center">CHART: XAUUSD, 1H</span>
+                    <span class="hover:text-white cursor-pointer h-12 flex items-center transition">ORDER FLOW</span>
+                    <span class="hover:text-white cursor-pointer h-12 flex items-center transition">MACRO RELEASES</span>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="glass rounded-3xl p-6 border-l-4 border-[#fbbf24]">
-                        <h4 class="text-xs font-bold text-slate-500 uppercase mb-2">Impacto Inflación</h4>
-                        <p class="text-lg font-bold">ALTO ALCISTA</p>
-                    </div>
-                    <div class="glass rounded-3xl p-6 border-l-4 border-red-500">
-                        <h4 class="text-xs font-bold text-slate-500 uppercase mb-2">Fortaleza Dólar</h4>
-                        <p class="text-lg font-bold">DEBILITÁNDOSE</p>
-                    </div>
-                    <div class="glass rounded-3xl p-6 border-l-4 border-blue-500">
-                        <h4 class="text-xs font-bold text-slate-500 uppercase mb-2">Tensión Geo</h4>
-                        <p class="text-lg font-bold">NIVEL CRÍTICO</p>
-                    </div>
+                <div class="flex items-center gap-4">
+                    <i data-lucide="maximize" class="w-4 h-4 text-slate-500 cursor-pointer"></i>
+                    <i data-lucide="settings" class="w-4 h-4 text-slate-500 cursor-pointer"></i>
                 </div>
             </div>
 
-            <div class="lg:col-span-4 space-y-8">
-                <div class="bg-gradient-to-b from-[#fbbf24]/10 to-transparent border border-[#fbbf24]/20 rounded-[48px] p-10 text-center relative overflow-hidden">
-                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-[#fbbf24]/20 blur-3xl rounded-full"></div>
-                    <i data-lucide="crown" class="w-12 h-12 text-[#fbbf24] mx-auto mb-6"></i>
-                    <h3 class="text-2xl font-black mb-4 gold-text tracking-widest">GOLD ALPHA</h3>
-                    <p class="text-slate-500 text-sm mb-8 leading-relaxed italic">Únete al 1% que opera el Oro con datos de flujo institucional directo.</p>
-                    <button class="w-full bg-[#fbbf24] text-black font-black py-5 rounded-2xl hover:brightness-110 shadow-[0_10px_30px_rgba(251,191,36,0.2)] transition transform active:scale-95">DESBLOQUEAR TERMINAL</button>
-                </div>
-
-                <div class="glass rounded-[40px] p-8">
-                    <h3 class="text-[10px] font-black text-slate-500 tracking-[0.3em] uppercase mb-8 flex items-center gap-2">
-                        <i data-lucide="anchor" class="w-4 h-4 text-[#fbbf24]"></i> Safe Haven Pulse
-                    </h3>
-                    <div class="space-y-6">
-                        <div class="flex justify-between items-end">
-                            <span class="text-xs font-bold text-slate-400">SENTIMIENTO GLOBAL</span>
-                            <span class="text-[#fbbf24] font-black italic">EXTREMO MIEDO</span>
-                        </div>
-                        <div class="w-full h-1 bg-white/5 rounded-full">
-                            <div class="h-full bg-gradient-to-r from-red-500 to-[#fbbf24] w-[88%]"></div>
-                        </div>
-                        <p class="text-[11px] text-slate-500 italic">"Los inversores huyen de la renta variable. El capital está fluyendo masivamente hacia XAUUSD."</p>
-                    </div>
-                </div>
+            <div class="flex-1 p-6 relative">
+                <div id="main-chart" class="w-full h-full rounded-2xl border border-white/5 bg-black/40 shadow-inner"></div>
             </div>
-        </div>
-    </main>
+
+            <footer class="h-24 border-t border-white/5 bg-black p-4 flex gap-6 items-center">
+                <div class="w-16 h-16 bg-[#fbbf24]/5 border border-[#fbbf24]/20 rounded flex items-center justify-center text-[#fbbf24]">
+                    <i data-lucide="rss" size="24"></i>
+                </div>
+                <div class="flex-1 overflow-hidden">
+                    <h4 id="news-title" class="text-sm font-bold text-white truncate uppercase tracking-tighter">Conectando con el feed de inteligencia global...</h4>
+                    <p id="news-meta" class="text-[10px] text-slate-500 mono mt-1 tracking-widest uppercase">Buscando noticias de alto impacto (FED, CPI, Geopolítica)...</p>
+                </div>
+                <div class="hidden lg:block w-48 text-right">
+                    <span class="text-[10px] font-bold text-slate-500 block uppercase">Spread (Live)</span>
+                    <span class="text-lg font-bold text-green-500 mono">0.1 PIPS</span>
+                </div>
+            </footer>
+        </main>
+    </div>
 
     <script>
         lucide.createIcons();
-        const TOKEN = '59929dc4d0e025025d3e0609c2532afd1aee94f8';
+        const API_KEY = '59929dc4d0e025025d3e0609c2532afd1aee94f8';
 
-        // GRÁFICO ORO
-        const chartElement = document.getElementById('gold-chart');
-        const chart = LightweightCharts.createChart(chartElement, {
-            layout: { background: { color: 'transparent' }, textColor: '#475569' },
-            grid: { vertLines: { color: 'rgba(255,255,255,0.02)' }, horzLines: { color: 'rgba(255,255,255,0.02)' } },
-            width: chartElement.clientWidth,
-            height: 450,
+        // CONFIGURACIÓN DE GRÁFICO (MODO PRO)
+        const container = document.getElementById('main-chart');
+        const chart = LightweightCharts.createChart(container, {
+            layout: { background: { color: 'transparent' }, textColor: '#94a3b8' },
+            grid: { vertLines: { color: 'rgba(255,255,255,0.01)' }, horzLines: { color: 'rgba(255,255,255,0.01)' } },
+            timeScale: { borderVisible: false, timeVisible: true, secondsVisible: false },
+            rightPriceScale: { borderVisible: false },
+            width: container.clientWidth,
+            height: container.clientHeight,
         });
-        const series = chart.addAreaSeries({ 
-            lineColor: '#fbbf24', 
-            topColor: 'rgba(251, 191, 36, 0.2)', 
+
+        const goldSeries = chart.addAreaSeries({
+            lineColor: '#fbbf24',
+            topColor: 'rgba(251, 191, 36, 0.15)',
             bottomColor: 'transparent',
-            lineWidth: 3 
+            lineWidth: 2,
+            priceFormat: { type: 'price', precision: 2, minMove: 0.01 },
         });
-        
-        // Simulación histórica de Oro (XAUUSD)
-        series.setData([
-            { time: '2025-12-25', value: 2350.50 }, { time: '2025-12-26', value: 2380.20 },
-            { time: '2025-12-27', value: 2375.80 }, { time: '2025-12-28', value: 2410.40 },
-            { time: '2025-12-29', value: 2442.50 }
+
+        // Data dummy para el inicio
+        goldSeries.setData([
+            { time: '2026-01-07', value: 2420.50 },
+            { time: '2026-01-08', value: 2435.20 },
+            { time: '2026-01-09', value: 2430.80 },
+            { time: '2026-01-10', value: 2442.50 }
         ]);
 
-        // FUNCIÓN: PRECIOS SIMULADOS XAUUSD (Alta Fidelidad)
-        let currentGoldPrice = 2442.50;
-        function updateGoldPrice() {
-            const change = (Math.random() - 0.5) * 0.8;
-            currentGoldPrice += change;
-            document.getElementById('gold-price-ticker').innerText = `$${currentGoldPrice.toFixed(2)}`;
+        // FUNCIÓN: PRECIOS REALES (Simulados de alta precisión para XAUUSD)
+        let goldPrice = 2442.50;
+        function updatePrice() {
+            const fluctuation = (Math.random() - 0.5) * 0.4;
+            goldPrice += fluctuation;
+            document.getElementById('price-main').innerText = `$${goldPrice.toFixed(2)}`;
             const lastTime = new Date().toISOString().split('T')[0];
-            series.update({ time: lastTime, value: currentGoldPrice });
+            goldSeries.update({ time: lastTime, value: goldPrice });
         }
 
-        // FUNCIÓN: NOTICIAS (Filtradas por "Gold" o "Economy")
-        async function fetchGoldIntelligence() {
+        // FUNCIÓN: NOTICIAS (ALLORIGINS + CRYPTOPANIC)
+        async function fetchIntel() {
             try {
-                const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://cryptopanic.com/api/v1/posts/?auth_token=${TOKEN}&filter=hot`)}`);
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://cryptopanic.com/api/v1/posts/?auth_token=${API_KEY}&filter=hot`)}`;
+                const response = await fetch(proxyUrl);
                 const json = await response.json();
-                const news = JSON.parse(json.contents);
+                const data = JSON.parse(json.contents);
                 
-                // Buscamos una noticia que mencione Oro o Macro
-                const goldNews = news.results.find(n => n.title.toLowerCase().includes('gold') || n.title.toLowerCase().includes('fed') || n.title.toLowerCase().includes('dollar')) || news.results[0];
-                
-                if(goldNews) {
-                    document.getElementById('news-headline').innerText = goldNews.title;
-                    document.getElementById('news-content').innerHTML = `<span class="text-[#fbbf24] font-black underline uppercase">Nexus Gold Intel:</span> El mercado reacciona a los datos de <b>${goldNews.source.domain}</b>. Los algoritmos detectan un cambio en la liquidez de corto plazo.`;
+                const item = data.results.find(n => 
+                    n.title.toLowerCase().includes('gold') || 
+                    n.title.toLowerCase().includes('fed') || 
+                    n.title.toLowerCase().includes('dollar')
+                ) || data.results[0];
+
+                if(item) {
+                    document.getElementById('news-title').innerText = item.title;
+                    document.getElementById('news-meta').innerText = `SOURCE: ${item.source.domain.toUpperCase()} | IMPACT: HIGH | NEURAL SCORE: 98/100`;
                 }
-            } catch (e) {
-                console.log("Re-conectando Nexus Intel...");
-            }
+            } catch (e) { console.log("Nexus Link Latency..."); }
         }
 
-        updateGoldPrice();
-        fetchGoldIntelligence();
-        setInterval(updateGoldPrice, 3000); // Movimiento de precio cada 3s
-        setInterval(fetchGoldIntelligence, 60000); // Noticias cada min
-        window.onresize = () => chart.resize(chartElement.clientWidth, 450);
+        updatePrice();
+        fetchIntel();
+        setInterval(updatePrice, 2000);
+        setInterval(fetchIntel, 60000);
+
+        window.addEventListener('resize', () => {
+            chart.resize(container.clientWidth, container.clientHeight);
+        });
     </script>
 </body>
 </html>
