@@ -90,6 +90,14 @@
             { time: '2026-01-05', value: 63000 }, { time: '2026-01-06', value: 68000 },
         ]);
         window.onresize = () => chart.resize(chartElement.clientWidth, 350);
+   // Función para simular movimiento de mercado
+setInterval(() => {
+    const lastPrice = 68000 + Math.random() * 1000;
+    series.update({
+        time: new Date().toISOString().split('T')[0], // Simula el día de hoy
+        value: lastPrice
+    });
+}, 3000);
     </script>
 </body>
 </html>
