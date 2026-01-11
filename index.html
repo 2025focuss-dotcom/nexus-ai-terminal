@@ -3,129 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XAUUSD PRO | Terminal Institucional</title>
+    <title>NEXUS GOLD | Real-Time Terminal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;700;900&display=swap');
         body { background-color: #050505; color: #e2e8f0; font-family: 'Inter', sans-serif; overflow: hidden; margin: 0; }
-        .mono { font-family: 'JetBrains Mono', monospace; }
-        .glass { background: rgba(15, 15, 15, 0.8); border: 1px solid rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); }
-        #main-chart { min-height: 450px; width: 100%; background: #000; }
+        .bg-card { background: rgba(15, 15, 15, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(20px); border-radius: 1.5rem; }
+        .neon-purple { color: #a855f7; }
+        .neon-border { border-color: #a855f7; }
+        /* Contenedor del gráfico para que ocupe todo el espacio */
+        .tradingview-widget-container { height: 100%; width: 100%; }
     </style>
 </head>
 <body class="h-screen flex flex-col">
 
-    <header class="border-b border-white/5 bg-black p-4 flex justify-between items-center">
+    <header class="border-b border-white/5 bg-black/90 p-4 flex justify-between items-center z-50">
         <div class="flex items-center gap-4">
-            <div class="bg-[#fbbf24] p-1.5 rounded text-black"><i data-lucide="zap" size="18"></i></div>
-            <span class="text-lg font-black tracking-tighter uppercase">NEXUS<span class="text-[#fbbf24]">GOLD</span> PRO</span>
-            <div class="hidden md:flex gap-4 text-[10px] font-mono text-slate-500 uppercase ml-4">
-                <span class="text-green-500">● LIVE FEED</span>
-                <span>LATENCY: 12MS</span>
+            <div class="bg-gradient-to-br from-[#a855f7] to-[#d946ef] p-1.5 rounded-md text-white shadow-lg shadow-[#a855f7]/20">
+                <i data-lucide="square-stack" size="18"></i>
+            </div>
+            <span class="text-xl font-black tracking-tighter uppercase">NEXUS<span class="neon-purple">GOLD</span></span>
+            <div class="hidden md:flex gap-4 text-[10px] font-mono text-slate-500 uppercase ml-6">
+                <span class="text-green-500">● LIVE MARKET DATA</span>
+                <span>DATA SOURCE: FX_IDC</span>
             </div>
         </div>
-        <div class="text-[12px] font-bold mono text-[#fbbf24]" id="price-header">XAUUSD: $2,442.50</div>
+        <div class="flex items-center bg-black/50 px-4 py-1 rounded-full border border-white/10">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+            {
+                "symbol": "FX_IDC:XAUUSD",
+                "width": "200",
+                "colorTheme": "dark",
+                "isTransparent": true,
+                "locale": "es"
+            }
+            </script>
+        </div>
     </header>
 
     <div class="flex-1 flex overflow-hidden">
-        <aside class="w-72 border-r border-white/5 bg-black/50 p-6 space-y-8 hidden lg:block">
-            <div>
-                <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4">Market Metrics</h3>
-                <div class="space-y-3">
-                    <div class="flex justify-between text-xs"><span class="text-slate-400">DXY Index</span><span class="text-red-400">104.10 ▼</span></div>
-                    <div class="flex justify-between text-xs"><span class="text-slate-400">US10Y Yield</span><span class="text-white">4.22%</span></div>
+        
+        <aside class="w-80 border-r border-white/5 bg-black/50 overflow-y-auto p-6 space-y-8 hidden lg:block">
+            <div class="space-y-4">
+                <h3 class="text-[10px] font-bold text-slate-400 tracking-widest uppercase mb-4">Macro Playbook</h3>
+                <div class="bg-card p-5 space-y-6 shadow-xl border-l-2 neon-border">
+                    <h4 class="text-xs font-bold neon-purple uppercase">Análisis Fundamental</h4>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">El Oro está cotizando en niveles históricos sobre los <span class="text-white font-bold">$4,000</span> debido a la devaluación global y demanda institucional.</p>
+                    <div class="mt-4 space-y-2">
+                        <div class="flex justify-between border-b border-white/5 pb-2">
+                            <span class="text-slate-400 text-[10px]">Bullish Target</span>
+                            <span class="text-green-400 font-bold text-xs">$4,800</span>
+                        </div>
+                        <div class="flex justify-between border-b border-white/5 pb-2">
+                            <span class="text-slate-400 text-[10px]">Major Support</span>
+                            <span class="text-red-400 font-bold text-xs">$3,950</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="glass p-4 rounded-xl border-l-2 border-[#fbbf24]">
-                <h4 class="text-[10px] font-black text-[#fbbf24] uppercase mb-2">Neural Bias</h4>
-                <p class="text-[11px] text-slate-400 leading-relaxed italic">Fuerte acumulación detectada por encima del nivel psicológico de $2,440.</p>
+
+            <div class="bg-card p-5 space-y-4 shadow-xl">
+                <h3 class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">Correlaciones</h3>
+                <div class="tradingview-widget-container">
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+                    {
+                      "colorTheme": "dark",
+                      "dateRange": "12M",
+                      "showChart": false,
+                      "locale": "es",
+                      "width": "100%",
+                      "height": "200",
+                      "largeChartUrl": "",
+                      "isTransparent": true,
+                      "showSymbolLogo": true,
+                      "tabs": [
+                        {
+                          "title": "Indices",
+                          "symbols": [
+                            { "s": "FOREXCOM:DXY", "d": "Dollar Index" },
+                            { "s": "TVC:US10Y", "d": "US 10Y Yield" }
+                          ]
+                        }
+                      ]
+                    }
+                    </script>
+                </div>
             </div>
         </aside>
 
-        <main class="flex-1 flex flex-col p-4 gap-4 overflow-y-auto">
-            <div class="glass p-6 rounded-2xl">
-                <h1 id="news-title" class="text-2xl lg:text-4xl font-black tracking-tighter mb-2">Iniciando Terminal de Datos...</h1>
-                <p id="news-meta" class="text-[10px] font-mono text-slate-500 uppercase tracking-[0.2em]">Escaneando fuentes institucionales...</p>
+        <main class="flex-1 flex flex-col p-6 gap-6 overflow-y-auto">
+            <div class="flex-1 relative bg-card rounded-2xl overflow-hidden shadow-2xl border border-white/5">
+                <div class="tradingview-widget-container">
+                    <div id="tradingview_xau"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                    <script type="text/javascript">
+                    new TradingView.widget({
+                        "autosize": true,
+                        "symbol": "FX_IDC:XAUUSD",
+                        "interval": "D",
+                        "timezone": "Etc/UTC",
+                        "theme": "dark",
+                        "style": "2",
+                        "locale": "es",
+                        "toolbar_bg": "#050505",
+                        "enable_publishing": false,
+                        "hide_top_toolbar": false,
+                        "hide_legend": false,
+                        "save_image": false,
+                        "container_id": "tradingview_xau",
+                        "backgroundColor": "rgba(0, 0, 0, 1)",
+                        "gridColor": "rgba(255, 255, 255, 0.05)"
+                    });
+                    </script>
+                </div>
             </div>
-
-            <div class="flex-1 relative glass rounded-2xl overflow-hidden min-h-[450px]">
-                <div id="main-chart"></div>
+            
+            <div class="bg-card p-6 rounded-2xl shadow-xl border-l-4 neon-border h-64 overflow-hidden">
+                <h3 class="text-sm font-bold neon-purple mb-4 uppercase flex items-center gap-2">
+                    <i data-lucide="rss" size="16"></i> Live Market News
+                </h3>
+                <div class="tradingview-widget-container">
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+                    {
+                      "feedMode": "market",
+                      "market": "stock",
+                      "colorTheme": "dark",
+                      "isTransparent": true,
+                      "displayMode": "regular",
+                      "width": "100%",
+                      "height": "100%",
+                      "locale": "es"
+                    }
+                    </script>
+                </div>
             </div>
         </main>
     </div>
 
+    <footer class="h-16 border-t border-white/5 bg-black/90 flex items-center justify-center gap-10 z-50">
+        <div class="flex items-center gap-6 opacity-40 hover:opacity-100 transition duration-500">
+            <span class="text-[10px] font-bold tracking-widest text-slate-500 uppercase">Trusted Data Providers:</span>
+            <img src="https://logos-world.net/wp-content/uploads/2021/02/Reuters-Logo.png" alt="Reuters" class="h-3 grayscale invert">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/Bloomberg_logo.svg" alt="Bloomberg" class="h-3 grayscale invert">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Nasdaq_logo.svg" alt="Nasdaq" class="h-2 grayscale invert">
+        </div>
+    </footer>
+
     <script>
-        // 1. ICONOS
         lucide.createIcons();
-
-        // 2. TOKEN (ASEGÚRATE QUE SEA EL TUYO)
-        const API_KEY = '59929dc4d0e025025d3e0609c2532afd1aee94f8';
-
-        // 3. INICIALIZAR GRÁFICO CON DIMENSIONES EXPLÍCITAS
-        const chartDiv = document.getElementById('main-chart');
-        const chart = LightweightCharts.createChart(chartDiv, {
-            layout: { background: { color: 'transparent' }, textColor: '#94a3b8' },
-            grid: { vertLines: { color: '#121212' }, horzLines: { color: '#121212' } },
-            width: chartDiv.offsetWidth || 800,
-            height: 450,
-            timeScale: { borderVisible: false }
-        });
-
-        const series = chart.addAreaSeries({
-            lineColor: '#fbbf24',
-            topColor: 'rgba(251, 191, 36, 0.1)',
-            bottomColor: 'transparent',
-            lineWidth: 2
-        });
-
-        // Datos de arranque
-        series.setData([
-            { time: '2026-01-08', value: 2420 },
-            { time: '2026-01-09', value: 2435 },
-            { time: '2026-01-10', value: 2442 }
-        ]);
-
-        // 4. ACTUALIZAR PRECIO (SIMULADO + VISUAL)
-        let currentPrice = 2442.50;
-        function updateMarket() {
-            currentPrice += (Math.random() - 0.5) * 0.5;
-            document.getElementById('price-header').innerText = `XAUUSD: $${currentPrice.toFixed(2)}`;
-            const now = new Date().toISOString().split('T')[0];
-            series.update({ time: now, value: currentPrice });
-        }
-
-        // 5. TRAER NOTICIAS REALES
-        async function getNews() {
-            try {
-                const proxy = "https://api.allorigins.win/get?url=";
-                const target = encodeURIComponent(`https://cryptopanic.com/api/v1/posts/?auth_token=${API_KEY}&filter=hot`);
-                const res = await fetch(proxy + target);
-                const json = await res.json();
-                const data = JSON.parse(json.contents);
-
-                if (data.results && data.results.length > 0) {
-                    const latest = data.results[0];
-                    document.getElementById('news-title').innerText = latest.title;
-                    document.getElementById('news-meta').innerText = `SOURCE: ${latest.source.domain.toUpperCase()} | IMPACT: HIGH | REAL-TIME ANALYTICS`;
-                }
-            } catch (e) {
-                // Si falla la API, ponemos una noticia profesional de respaldo
-                document.getElementById('news-title').innerText = "Oro se mantiene firme ante la debilidad del Índice Dólar (DXY)";
-                document.getElementById('news-meta').innerText = "ANÁLISIS NEXUS: FLUJO INSTITUCIONAL DETECTADO EN EL NIVEL $2,440";
-            }
-        }
-
-        // Ejecución inicial
-        getNews();
-        setInterval(updateMarket, 2000);
-        setInterval(getNews, 60000);
-
-        // Ajustar el gráfico si se cambia el tamaño de la pantalla
-        window.addEventListener('resize', () => {
-            chart.applyOptions({ width: chartDiv.offsetWidth });
-        });
     </script>
 </body>
 </html>
