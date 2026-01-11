@@ -3,156 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXUS GOLD | Real-Time Terminal</title>
+    <title>NEXUS GOLD | SYSTEM TERMINAL</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;700;900&display=swap');
-        body { background-color: #050505; color: #e2e8f0; font-family: 'Inter', sans-serif; overflow: hidden; margin: 0; }
-        .bg-card { background: rgba(15, 15, 15, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(20px); border-radius: 1.5rem; }
-        .neon-purple { color: #a855f7; }
-        .neon-border { border-color: #a855f7; }
-        /* Contenedor del gráfico para que ocupe todo el espacio */
-        .tradingview-widget-container { height: 100%; width: 100%; }
+        
+        :root {
+            --neon: #a855f7;
+            --bg: #030303;
+        }
+
+        body { 
+            background-color: var(--bg); 
+            color: #e2e8f0; 
+            font-family: 'Inter', sans-serif; 
+            overflow: hidden; 
+            margin: 0;
+            height: 100vh;
+        }
+
+        /* Efecto de líneas de monitor (CRT Scanlines) */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 100;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        .glass-panel { 
+            background: rgba(10, 10, 10, 0.8); 
+            border: 1px solid rgba(168, 85, 247, 0.2); 
+            box-shadow: 0 0 20px rgba(0,0,0,0.5), inset 0 0 10px rgba(168, 85, 247, 0.05);
+            border-radius: 4px; /* Bordes más rectos = más profesional/industrial */
+        }
+
+        .neon-text {
+            color: var(--neon);
+            text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+        }
+
+        .neon-border-top { border-top: 2px solid var(--neon); }
+
+        /* Animación de pulso para zonas críticas */
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .critical { animation: pulse-red 2s infinite; }
+
+        .tradingview-container {
+            filter: grayscale(0.2) brightness(0.9) contrast(1.1);
+            mix-blend-mode: lighten;
+        }
     </style>
 </head>
-<body class="h-screen flex flex-col">
+<body class="flex flex-col p-2 gap-2">
 
-    <header class="border-b border-white/5 bg-black/90 p-4 flex justify-between items-center z-50">
+    <header class="h-14 glass-panel flex justify-between items-center px-6">
         <div class="flex items-center gap-4">
-            <div class="bg-gradient-to-br from-[#a855f7] to-[#d946ef] p-1.5 rounded-md text-white shadow-lg shadow-[#a855f7]/20">
-                <i data-lucide="square-stack" size="18"></i>
-            </div>
-            <span class="text-xl font-black tracking-tighter uppercase">NEXUS<span class="neon-purple">GOLD</span></span>
-            <div class="hidden md:flex gap-4 text-[10px] font-mono text-slate-500 uppercase ml-6">
-                <span class="text-green-500">● LIVE MARKET DATA</span>
-                <span>DATA SOURCE: FX_IDC</span>
+            <div class="flex flex-col">
+                <span class="text-xs font-black tracking-[0.3em] neon-text">NEXUS SYSTEM</span>
+                <span class="text-[8px] mono text-slate-500 uppercase font-bold">Encrypted Connection: Active</span>
             </div>
         </div>
-        <div class="flex items-center bg-black/50 px-4 py-1 rounded-full border border-white/10">
-            <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-            {
-                "symbol": "FX_IDC:XAUUSD",
-                "width": "200",
-                "colorTheme": "dark",
-                "isTransparent": true,
-                "locale": "es"
-            }
-            </script>
-        </div>
-    </header>
 
-    <div class="flex-1 flex overflow-hidden">
-        
-        <aside class="w-80 border-r border-white/5 bg-black/50 overflow-y-auto p-6 space-y-8 hidden lg:block">
-            <div class="space-y-4">
-                <h3 class="text-[10px] font-bold text-slate-400 tracking-widest uppercase mb-4">Macro Playbook</h3>
-                <div class="bg-card p-5 space-y-6 shadow-xl border-l-2 neon-border">
-                    <h4 class="text-xs font-bold neon-purple uppercase">Análisis Fundamental</h4>
-                    <p class="text-[11px] text-slate-400 leading-relaxed">El Oro está cotizando en niveles históricos sobre los <span class="text-white font-bold">$4,000</span> debido a la devaluación global y demanda institucional.</p>
-                    <div class="mt-4 space-y-2">
-                        <div class="flex justify-between border-b border-white/5 pb-2">
-                            <span class="text-slate-400 text-[10px]">Bullish Target</span>
-                            <span class="text-green-400 font-bold text-xs">$4,800</span>
-                        </div>
-                        <div class="flex justify-between border-b border-white/5 pb-2">
-                            <span class="text-slate-400 text-[10px]">Major Support</span>
-                            <span class="text-red-400 font-bold text-xs">$3,950</span>
-                        </div>
-                    </div>
-                </div>
+        <div class="flex gap-8 items-center h-full">
+            <div class="flex flex-col items-end">
+                <span class="text-[9px] mono text-slate-500 uppercase">Current Asset</span>
+                <span class="text-sm font-bold tracking-tighter italic">GOLD / XAUUSD</span>
             </div>
-
-            <div class="bg-card p-5 space-y-4 shadow-xl">
-                <h3 class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">Correlaciones</h3>
+            <div class="w-32">
                 <div class="tradingview-widget-container">
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
                     {
-                      "colorTheme": "dark",
-                      "dateRange": "12M",
-                      "showChart": false,
-                      "locale": "es",
-                      "width": "100%",
-                      "height": "200",
-                      "largeChartUrl": "",
-                      "isTransparent": true,
-                      "showSymbolLogo": true,
-                      "tabs": [
-                        {
-                          "title": "Indices",
-                          "symbols": [
-                            { "s": "FOREXCOM:DXY", "d": "Dollar Index" },
-                            { "s": "TVC:US10Y", "d": "US 10Y Yield" }
-                          ]
-                        }
-                      ]
-                    }
-                    </script>
-                </div>
-            </div>
-        </aside>
-
-        <main class="flex-1 flex flex-col p-6 gap-6 overflow-y-auto">
-            <div class="flex-1 relative bg-card rounded-2xl overflow-hidden shadow-2xl border border-white/5">
-                <div class="tradingview-widget-container">
-                    <div id="tradingview_xau"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-                    <script type="text/javascript">
-                    new TradingView.widget({
-                        "autosize": true,
-                        "symbol": "FX_IDC:XAUUSD",
-                        "interval": "D",
-                        "timezone": "Etc/UTC",
-                        "theme": "dark",
-                        "style": "2",
-                        "locale": "es",
-                        "toolbar_bg": "#050505",
-                        "enable_publishing": false,
-                        "hide_top_toolbar": false,
-                        "hide_legend": false,
-                        "save_image": false,
-                        "container_id": "tradingview_xau",
-                        "backgroundColor": "rgba(0, 0, 0, 1)",
-                        "gridColor": "rgba(255, 255, 255, 0.05)"
-                    });
-                    </script>
-                </div>
-            </div>
-            
-            <div class="bg-card p-6 rounded-2xl shadow-xl border-l-4 neon-border h-64 overflow-hidden">
-                <h3 class="text-sm font-bold neon-purple mb-4 uppercase flex items-center gap-2">
-                    <i data-lucide="rss" size="16"></i> Live Market News
-                </h3>
-                <div class="tradingview-widget-container">
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
-                    {
-                      "feedMode": "market",
-                      "market": "stock",
+                      "symbol": "OANDA:XAUUSD",
                       "colorTheme": "dark",
                       "isTransparent": true,
-                      "displayMode": "regular",
-                      "width": "100%",
-                      "height": "100%",
                       "locale": "es"
                     }
                     </script>
                 </div>
             </div>
-        </main>
-    </div>
-
-    <footer class="h-16 border-t border-white/5 bg-black/90 flex items-center justify-center gap-10 z-50">
-        <div class="flex items-center gap-6 opacity-40 hover:opacity-100 transition duration-500">
-            <span class="text-[10px] font-bold tracking-widest text-slate-500 uppercase">Trusted Data Providers:</span>
-            <img src="https://logos-world.net/wp-content/uploads/2021/02/Reuters-Logo.png" alt="Reuters" class="h-3 grayscale invert">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/Bloomberg_logo.svg" alt="Bloomberg" class="h-3 grayscale invert">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Nasdaq_logo.svg" alt="Nasdaq" class="h-2 grayscale invert">
         </div>
-    </footer>
+    </header>
 
-    <script>
-        lucide.createIcons();
-    </script>
-</body>
-</html>
+    <div class="flex-1 flex gap-2 overflow-hidden">
+        
+        <aside class="w-72 flex flex-col gap-2">
+            <div class="flex-1 glass-panel p-4 flex flex-col">
+                <h3 class="text-[10px] font-black neon-text mb-4 uppercase tracking-widest border-b border-purple-500/20 pb-2">Macro Bias</h3>
+                <div class="space-y-4">
+                    <div class="space-y-1">
+                        <span class="text-[9px] mono text-slate-500 uppercase">Institutional Position</span>
+                        <div class="flex justify-between items-end">
+                            <span class="text-xl font-bold italic">BULLISH</span>
+                            <span class="text-xs text-green-500 mono">88.4%</span>
+                        </div>
+                        <div class="h-1 bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-purple-600 shadow-[0_0_10px_#a855f7]" style="width: 88%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 space-y-4">
+                    <h3 class="text-[10px] font-black text-slate-500 mb-4 uppercase tracking-widest">Global Correlation</h3>
+                    <div class="bg-black/40 p-3 rounded border border-white/5">
+                        <div class="tradingview-widget-container">
+                            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+                            {
+                              "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "150",
+                              "symbols": [ { "s": "OANDA:XAUUSD" }, { "s": "FX_IDC:DXY" } ]
+                            }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="h-32 glass-panel p-4 critical bg-red-950/10 border-red-500/30">
+                <span class="text-[9px] font-black text-red-500 uppercase tracking-widest flex items-center gap-2">
+                    <i data-lucide="alert-triangle" size="12"></i> Risk Alert
+                </span>
+                <p class="text-[10px] mt-2 leading-relaxed text-red-200/70 italic font-medium">
+                    Volatilidad extrema detectada por liquidez masiva en $4,350. Ejecución institucional inminente.
+                </p>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col gap-2">
+            <div class="flex-1 glass-panel overflow-hidden relative">
+                <div class="absolute top-4 left-4 z-10 flex gap-2">
+                    <span class="bg-purple-600/20 text-purple-400 text-[8px] font-bold px-2 py-1 border border-purple-500/30 uppercase">Neural Graph v4.0</span>
+                </div>
+                <div id="tradingview_main" class="h-full w-full tradingview-container"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                <script type="text/javascript">
+                new TradingView.widget({
+                  "autosize": true,
+                  "symbol": "OANDA:XAUUSD",
+                  "interval": "60",
+                  "timezone": "Etc/UTC",
+                  "theme": "dark",
+                  "style": "2",
+                  "locale": "es",
+                  "enable_publishing": false,
+                  "hide_top_toolbar": false,
+                  "hide_legend": false,
+                  "save_image": false,
+                  "container_id": "tradingview_main",
+                  "backgroundColor": "#030303",
+                  "gridColor": "rgba(168, 85, 247, 0.05)"
+                });
+                </script>
+            </div>
+
+            <div class="h-48 flex gap-2">
+                <div class="flex-1 glass-panel p-4 overflow-hidden">
+                    <span class="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-3 block">Global News Feed</span>
+                    <div class="tradingview-widget-container h-full">
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+                        {
+                          "feedMode": "market", "market": "stock", "colorTheme": "dark", "isTransparent": true, "displayMode": "regular", "width": "100%", "height": "100%"
+                        }
+                        </script>
+                    </div>
+                </div>
+                <div class="w-64 glass-panel
