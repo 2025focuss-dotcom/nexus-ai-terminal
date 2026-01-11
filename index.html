@@ -3,126 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXUS GOLD | MACRO TERMINAL</title>
+    <title>NEXUS GOLD | INTELLIGENCE TERMINAL</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
         
-        :root { --purple-glow: rgba(168, 85, 247, 0.4); }
-        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; height: 100vh; overflow: hidden; }
-        
-        .bento-panel { 
-            background: rgba(13, 13, 13, 0.9); 
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 8px;
-            overflow: hidden;
+        :root { --neon: #a855f7; }
+        body { 
+            background-color: #000; color: #fff; font-family: 'Inter', sans-serif; 
+            height: 100vh; width: 100vw; overflow: hidden; margin: 0; padding: 12px;
+            display: grid;
+            grid-template-areas: 
+                "header header header"
+                "left chart right"
+                "footer footer footer";
+            grid-template-columns: 350px 1fr 380px;
+            grid-template-rows: 60px 1fr 50px;
+            gap: 12px;
         }
 
-        .highlight-purple { border: 1.5px solid var(--purple-glow); box-shadow: 0 0 15px rgba(168, 85, 247, 0.1); }
+        /* Estilo de Paneles de las Imágenes */
+        .terminal-panel {
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            position: relative;
+        }
+
+        .header-area { grid-area: header; display: flex; justify-content: space-between; align-items: center; }
+        .left-area { grid-area: left; }
+        .chart-area { grid-area: chart; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden; }
+        .right-area { grid-area: right; display: flex; flex-direction: column; gap: 12px; }
+        .footer-area { grid-area: footer; display: flex; justify-content: center; align-items: center; gap: 40px; opacity: 0.5; }
+
+        .tag { font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; }
+        .tag-bullish { background: rgba(74, 222, 128, 0.1); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.2); }
         
-        .data-table td { padding: 8px 4px; font-size: 11px; border-bottom: 1px solid rgba(255,255,255,0.03); }
-        .tag { padding: 2px 6px; border-radius: 4px; font-size: 9px; font-weight: 800; text-transform: uppercase; }
+        .price-glitch { font-family: 'JetBrains Mono', monospace; font-weight: 900; font-size: 24px; color: var(--neon); letter-spacing: -1px; }
         
-        /* Estilos específicos de tus capturas */
-        .tag-bullish { color: #4ade80; background: rgba(74, 222, 128, 0.1); }
-        .tag-bearish { color: #f87171; background: rgba(248, 113, 113, 0.1); }
-        .tag-high { color: #ff4d4d; border: 1px solid #ff4d4d; }
+        /* Ocultar barras de scroll pero permitir scroll interno */
+        .scroll-clean::-webkit-scrollbar { width: 0; }
     </style>
 </head>
-<body class="flex flex-col p-3 gap-3">
+<body>
 
-    <header class="flex justify-between items-center px-2">
-        <div class="flex gap-4 items-center">
-            <span class="text-xs font-black tracking-widest text-purple-500 uppercase">Nexus Terminal v4</span>
-            <div class="flex gap-2">
-                <span class="tag tag-bullish">Higher Timeframe: Bullish</span>
-                <span class="tag bg-purple-500/10 text-purple-400 border border-purple-500/20">Intraday: Slightly Bullish</span>
+    <header class="header-area px-4">
+        <div class="flex items-center gap-6">
+            <div class="flex flex-col">
+                <span class="text-xs font-black tracking-widest text-purple-500">NEXUS GOLD SYSTEM</span>
+                <div class="flex gap-2 mt-1">
+                    <span class="tag tag-bullish">HTF: Bullish</span>
+                    <span class="tag bg-purple-500/10 text-purple-400 border border-purple-500/20">Intraday: Slightly Bullish</span>
+                </div>
             </div>
         </div>
-        <div class="text-right">
-            <span class="text-[10px] text-slate-500 mono block">XAUUSD SPOT</span>
-            <span class="text-xl font-black italic tracking-tighter" id="live-price">$4,308.20</span>
+        <div class="flex items-center gap-4">
+            <span class="text-[10px] mono text-slate-500">XAUUSD LIVE</span>
+            <div class="price-glitch" id="live-price">4.509,01</div>
         </div>
     </header>
 
-    <div class="flex-1 grid grid-cols-12 gap-3 overflow-hidden">
+    <aside class="left-area terminal-panel scroll-clean overflow-y-auto">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="font-bold text-sm tracking-tight">Non-Farm Payrolls</h3>
+            <span class="text-[9px] text-red-500 border border-red-500 px-1.5 rounded font-black">HIGH IMPACT</span>
+        </div>
         
-        <div class="col-span-3 flex flex-col gap-3">
-            <div class="bento-panel highlight-purple p-5 flex-1 overflow-y-auto">
-                <div class="flex justify-between items-start mb-6">
-                    <h3 class="font-bold text-sm">Non-Farm Payrolls</h3>
-                    <span class="text-[9px] text-red-500 font-bold border border-red-500 px-1.5 rounded">HIGH</span>
-                </div>
-                
-                <ul class="space-y-3 mb-8">
-                    <li class="text-[11px] text-slate-400 flex items-center gap-2"><div class="w-1 h-1 bg-purple-500"></div> Shapes Fed rate pause decisions</li>
-                    <li class="text-[11px] text-slate-400 flex items-center gap-2"><div class="w-1 h-1 bg-purple-500"></div> Signals labor market cooling trend</li>
-                    <li class="text-[11px] text-slate-400 flex items-center gap-2"><div class="w-1 h-1 bg-purple-500"></div> Risk of sharp employment deterioration</li>
-                </ul>
+        <ul class="space-y-4 mb-8">
+            <li class="text-[11px] text-slate-400 flex gap-3"><span class="w-1 h-1 bg-purple-500 mt-1.5"></span> Shapes Fed rate pause decisions</li>
+            <li class="text-[11px] text-slate-400 flex gap-3"><span class="w-1 h-1 bg-purple-500 mt-1.5"></span> Signals labor market cooling trend</li>
+            <li class="text-[11px] text-slate-400 flex gap-3"><span class="w-1 h-1 bg-purple-500 mt-1.5"></span> Historically volatile for USD, yields</li>
+        </ul>
 
-                <div class="space-y-4">
-                    <h4 class="text-[10px] font-bold text-slate-500 tracking-widest uppercase">Playbook</h4>
-                    <table class="w-full data-table">
-                        <tr class="text-green-500 font-bold"><td>Above 240K</td><td class="text-right">Very Bullish</td></tr>
-                        <tr class="text-slate-300"><td>Forecast 220K</td><td class="text-right">Ranging</td></tr>
-                        <tr class="text-red-500 font-bold"><td>Below 205K</td><td class="text-right">Very Bearish</td></tr>
-                    </table>
-                </div>
+        <div class="mt-auto">
+            <h4 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4">Market Playbook</h4>
+            <div class="space-y-2">
+                <div class="flex justify-between p-2 bg-white/5 rounded"><span class="text-xs text-green-400 font-bold">Above 240K</span><span class="text-xs">Very Bullish</span></div>
+                <div class="flex justify-between p-2 bg-white/5 rounded"><span class="text-xs text-slate-400 font-bold">Forecast 220K</span><span class="text-xs">Ranging</span></div>
+                <div class="flex justify-between p-2 bg-white/5 rounded"><span class="text-xs text-red-400 font-bold">Below 205K</span><span class="text-xs">Very Bearish</span></div>
             </div>
+        </div>
+    </aside>
 
-            <div class="bento-panel p-4 h-40">
-                <h3 class="text-[10px] font-bold text-slate-500 uppercase mb-3">Bank Forecasts</h3>
-                <div class="flex justify-around items-center h-full pb-4">
-                    <div class="text-center"><p class="text-[9px] text-slate-500">GS</p><p class="text-xs font-bold">4.40%</p></div>
-                    <div class="text-center"><p class="text-[9px] text-slate-500">JPM</p><p class="text-xs font-bold">4.45%</p></div>
-                    <div class="text-center"><p class="text-[9px] text-slate-500">BofA</p><p class="text-xs font-bold">4.38%</p></div>
+    <main class="chart-area">
+        <div id="tradingview_nexus" class="h-full w-full"></div>
+    </main>
+
+    <aside class="right-area">
+        <div class="terminal-panel border-l-4 border-l-green-500">
+            <h3 class="text-green-400 font-black text-xs uppercase italic mb-4">What supports the bias?</h3>
+            <ul class="space-y-3">
+                <li class="text-[11px] flex gap-3"><i data-lucide="check-circle" size="14" class="text-green-500"></i> Fed cuts rates third time</li>
+                <li class="text-[11px] flex gap-3"><i data-lucide="check-circle" size="14" class="text-green-500"></i> Powell rules out rate hikes</li>
+                <li class="text-[11px] flex gap-3"><i data-lucide="check-circle" size="14" class="text-green-500"></i> CFTC gold positions 210.3K vs 202.3K</li>
+            </ul>
+        </div>
+
+        <div class="terminal-panel flex-1">
+            <h3 class="text-[10px] font-black text-slate-500 uppercase mb-4 tracking-widest">Neural News Feed</h3>
+            <div class="space-y-4 overflow-y-auto pr-2 scroll-clean">
+                <div class="p-3 bg-purple-500/5 border border-purple-500/20 rounded">
+                    <div class="flex justify-between mb-2"><span class="bg-orange-500 text-black text-[8px] font-black px-1.5 rounded">HOT</span><span class="text-[9px] text-slate-500 italic">5m ago</span></div>
+                    <p class="text-[11px] font-bold leading-tight uppercase">POWELL: EVERYONE AT TABLE AGREES INFLATION IS TOO HIGH</p>
+                </div>
+                <div class="p-3 bg-white/5 rounded opacity-60">
+                    <p class="text-[10px] font-bold uppercase">Gold bid on dovish-leaning Fed cut prospects</p>
                 </div>
             </div>
         </div>
+    </aside>
 
-        <div class="col-span-6 bento-panel relative">
-            <div id="tv_main_chart" class="h-full w-full"></div>
-        </div>
-
-        <div class="col-span-3 flex flex-col gap-3">
-            <div class="bento-panel p-5 border-l-4 border-l-green-500">
-                <h3 class="text-green-500 font-black text-xs uppercase tracking-tighter mb-4 italic">What supports the bias?</h3>
-                <ul class="space-y-4">
-                    <li class="text-[11px] flex gap-3"><i data-lucide="circle-check" size="14" class="text-green-500"></i> Fed cuts rates third time</li>
-                    <li class="text-[11px] flex gap-3"><i data-lucide="circle-check" size="14" class="text-green-500"></i> Powell rules out rate hikes</li>
-                    <li class="text-[11px] flex gap-3"><i data-lucide="circle-check" size="14" class="text-green-500"></i> Labor downside risks acknowledged</li>
-                </ul>
-            </div>
-
-            <div class="bento-panel flex-1 p-5 overflow-hidden flex flex-col">
-                <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4">Live Intelligence Feed</h3>
-                <div class="space-y-4 overflow-y-auto pr-2">
-                    <div class="p-3 bg-white/5 rounded border border-white/5">
-                        <div class="flex justify-between mb-1"><span class="tag-bullish text-[8px] px-1 rounded">HOT</span><span class="text-[8px] text-slate-500">5m ago</span></div>
-                        <p class="text-[10px] font-bold uppercase leading-tight">Trump: Rates should be the lowest in the world</p>
-                    </div>
-                    <div class="p-3 bg-white/5 rounded border border-white/5 opacity-60">
-                        <div class="flex justify-between mb-1"><span class="text-[8px] text-slate-500">12m ago</span></div>
-                        <p class="text-[10px] font-bold uppercase leading-tight">Powell: Inflation outlook has not changed much</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <footer class="h-10 flex items-center justify-center gap-12 border-t border-white/5">
-        <span class="text-[9px] mono text-slate-600 uppercase tracking-[0.3em]">Institutional Data Flow:</span>
-        <img src="https://logos-world.net/wp-content/uploads/2021/02/Reuters-Logo.png" class="h-2.5 grayscale invert opacity-30">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/Bloomberg_logo.svg" class="h-2.5 grayscale invert opacity-30">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Nasdaq_logo.svg" class="h-2 grayscale invert opacity-30">
+    <footer class="footer-area">
+        <span class="text-[9px] font-bold tracking-[0.4em] text-slate-500">DATA FEED:</span>
+        <img src="https://logos-world.net/wp-content/uploads/2021/02/Reuters-Logo.png" class="h-3 grayscale invert">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/Bloomberg_logo.svg" class="h-3 grayscale invert">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Nasdaq_logo.svg" class="h-2 grayscale invert">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/CME_Group_logo.svg/1280px-CME_Group_logo.svg.png" class="h-3 grayscale invert">
     </footer>
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script>
         lucide.createIcons();
 
-        // Configuración profesional del gráfico
+        // Inicialización de Gráfico Profesional
         new TradingView.widget({
             "autosize": true,
             "symbol": "OANDA:XAUUSD",
@@ -133,18 +141,16 @@
             "locale": "es",
             "enable_publishing": false,
             "hide_top_toolbar": false,
-            "hide_legend": false,
-            "container_id": "tv_main_chart",
-            "backgroundColor": "#0d0d0d",
-            "gridColor": "rgba(42, 46, 57, 0.05)",
-            "save_image": false
+            "container_id": "tradingview_nexus",
+            "backgroundColor": "#0a0a0a",
+            "gridColor": "rgba(42, 46, 57, 0.05)"
         });
 
-        // Simulación de precio real para el header
-        let price = 4308.20;
+        // Actualizador de precio (Simulado para fluidez)
+        let base = 4509.01;
         setInterval(() => {
-            price += (Math.random() - 0.5) * 0.4;
-            document.getElementById('live-price').innerText = `$${price.toFixed(2)}`;
+            base += (Math.random() - 0.5) * 0.2;
+            document.getElementById('live-price').innerText = base.toLocaleString('de-DE', {minimumFractionDigits: 2});
         }, 1000);
     </script>
 </body>
